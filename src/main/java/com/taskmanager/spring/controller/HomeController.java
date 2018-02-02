@@ -1,6 +1,8 @@
 package com.taskmanager.spring.controller;
 
+import com.taskmanager.spring.Domain.Task;
 import com.taskmanager.spring.Domain.User;
+import com.taskmanager.spring.service.TaskService;
 import com.taskmanager.spring.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -18,7 +20,10 @@ import java.util.List;
 public class HomeController
 {
     @Autowired
-    UserService userService;
+    UserService userService;;
+
+    @Autowired
+    TaskService taskService;
 
     //Redirect to login page if not logged in
     @RequestMapping(value = "/", method = RequestMethod.GET)
@@ -51,7 +56,9 @@ public class HomeController
     public String users(Model model)
     {
         List<User> users = userService.getAll();
+        List<Task> tasks = taskService.getAll();
         model.addAttribute("users", users);
+        model.addAttribute("tasks", tasks);
         return "index";
     }
 }

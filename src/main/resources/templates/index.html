@@ -19,5 +19,24 @@
     </tr>
 </table>
 
+<table border="1px">
+    <tr>
+        <th>Title</th>
+        <th>Body</th>
+        <th>Completed</th>
+        <th>Created</th>
+        <th>ToComplete</th>
+        <th>UserId</th>
+    </tr>
+    <tr th:each="task : ${tasks}">
+        <td th:text="${task.getTitle()}">Onions</td>
+        <td th:text="${task.getBody()}">2.41</td>
+        <td th:text="${task.completed}">2.41</td>
+        <td th:text="${task.dateCreated}">Onions</td>
+        <td th:text="${task.dateComplete}">2.41</td>
+        <td th:text="${task.userid}">2.41</td>
+    </tr>
+</table>
+
 </body>
 </html>

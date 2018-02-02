@@ -3,21 +3,24 @@
 <head>
     <title th:text="'Welcome to Task Manager ' + ${session.username}">Welcome to Task Manager</title>
 </head>
-<div align="right">
+<div align="center">
     <a href = "#" th:href="@{/logout}">Logout</a>
+    <a href = "#" th:href="@{/home}">Home</a>
 </div>
+<p th:text="${param.homemsg[0]}" th:unless="${param.homemsg == null}">loginerror</p>
 <div align="center">
     <h3 th:text="'Welcome to Task Manager ' + ${session.username}"></h3>
     <body>
     <table border="1px">
         <tr>
-            <th>Name</th>
-            <th>Password</th>
-            <th>Delete</th>
-            <th>Update</th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
         </tr>
     </table>
 
+    <a href="#" th:href="@{/addtask}">Add Task</a>
     </body>
 </div>
 </html>

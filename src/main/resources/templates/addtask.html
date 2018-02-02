@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<div align="center">
+    <head>
+        <title>Add a task</title>
+    </head>
+    <div align="center">
+        <a href = "#" th:href="@{/logout}">Logout</a>
+        <a href = "#" th:href="@{/home}">Home</a>
+    </div>
+    <div th:if="${message != null}">
+        <span th:text="${message}"/>
+    </div>
+    <body>
+        <h3>Add a task</h3>
+        <form action="#" th:action="@{/addtask}" th:object="${task}" method="post" id = "addtask">
+            <p>Title:</p>
+            <input type = "text" th:field="*{title}" />
+            <p>Body:</p>
+            <textarea rows="4" cols="50"  form="addtask" placeholder="Input task body"  th:field="*{body}"></textarea>
+            <p>Date(yyyy-mm-dd):</p>
+            <input type = "text"  th:field="*{dateComplete}"/>
+            <br/><br/><br/>
+            <input type = "submit" value = "Add"/>
+        </form>
+    </body>
+</div>
+</html>

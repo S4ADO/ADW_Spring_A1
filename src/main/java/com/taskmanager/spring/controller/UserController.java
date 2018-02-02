@@ -65,7 +65,7 @@ public class UserController
         return "redirect:/login";
     }
 
-        @RequestMapping(value = "/register", method = RequestMethod.GET) // Would output to /user/register
+    @RequestMapping(value = "/register", method = RequestMethod.GET) // Would output to /user/register
     public String registerView(Model model)
     {
         User user = new User();
