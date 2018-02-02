@@ -31,7 +31,7 @@ public class HomeController
     {
         if(session.getAttribute("login") != null)
         {
-            return "home";
+            return "redirect:/home";
         }
         return "redirect:/login";
     }
@@ -42,6 +42,8 @@ public class HomeController
     {
         if(session.getAttribute("login") != null)
         {
+            List<Task> currentUsersTasks = taskService.getAllTasksByUser((Long)session.getAttribute("userid"));
+            model.addAttribute("tasks", currentUsersTasks);
             return "home";
         }
         else

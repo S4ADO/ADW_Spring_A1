@@ -11,15 +11,22 @@
 <div align="center">
     <h3 th:text="'Welcome to Task Manager ' + ${session.username}"></h3>
     <body>
-    <table border="1px">
-        <tr>
-            <th></th>
-            <th></th>
-            <th></th>
-            <th></th>
-        </tr>
-    </table>
-
+        <table border="1px">
+            <tr>
+                <th>Created</th>
+                <th>Title</th>
+                <th>Body</th>
+                <th>Completed</th>
+                <th>ToComplete</th>
+            </tr>
+            <tr th:each="task : ${tasks}">
+                <td th:text="${task.dateCreated}"></td>
+                <td th:text="${task.getTitle()}"></td>
+                <td th:text="${task.getBody()}"></td>
+                <td th:text="${task.completed}"></td>
+                <td th:text="${task.dateComplete}"></td>
+            </tr>
+        </table>
     <a href="#" th:href="@{/addtask}">Add Task</a>
     </body>
 </div>

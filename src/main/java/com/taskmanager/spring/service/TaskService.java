@@ -20,9 +20,9 @@ public class TaskService
        return taskRep.save(t);
     }
 
-    public Task getAllTasksByUser(User u)
+    public List<Task> getAllTasksByUser(Long id)
     {
-        return new Task();
+        return taskRep.findAllByUserid(id);
     }
 
     public List<Task> getAll()
