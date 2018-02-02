@@ -1,5 +1,6 @@
 package com.taskmanager.spring.controller;
 
+import com.taskmanager.spring.Domain.LoginForm;
 import com.taskmanager.spring.Domain.User;
 import com.taskmanager.spring.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,20 +9,47 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 @Controller
-public class UserController {
+public class UserController
+{
     @Autowired
     UserService userService;
 
     @RequestMapping(value = "/login", method = RequestMethod.GET) // Would output to /user/register
     public String loginView(Model model)
     {
+        LoginForm user = new LoginForm();
         model.addAttribute("message", "");
-        User user = new User();
         model.addAttribute("user", user);
         return "login";
+    }
+
+    @RequestMapping(value = "/login", method = RequestMethod.POST) // Would output to /user/register
+    public String login(Model model, @Valid @ModelAttribute("user") LoginForm user, BindingResult bindingResult, HttpSession session)
+    {
+        if(bindingResult.hasErrors())
+        {
+            model.addAttribute("user", user);
+            model.addAttribute("message", "Fill in all fields");
+            return "login";
+        }
+
+        User retrievedUser = userService.validateLogin(user);
+        //No records matched for supplied username and password in database
+        if(retrievedUser == null)
+        {
+            model.addAttribute("user", user);
+            model.addAttribute("message", "Your details did not match any record in the database");
+            return "login";
+        }
+
+        session.setAttribute("login", true);
+        session.setAttribute("userid", retrievedUser.getId());
+        session.setAttribute("username", retrievedUser.getUsername());
+        return "redirect:/home";
     }
 
     @RequestMapping(value = "/register", method = RequestMethod.GET) // Would output to /user/register
@@ -59,7 +87,7 @@ public class UserController {
     public String delete(@PathVariable User user)
     {
         userService.delete(user);
-        return "redirect:/";
+        return "redirect:/users";
     }
 
     @RequestMapping(value = "/update/{user}", method = RequestMethod.GET)

@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title th:text="'Welcome to Task Manager ' + ${session.username}">Welcome to Task Manager</title>
+</head>
+<div align="center">
+    <h3 th:text="'Welcome to Task Manager ' + ${session.username}"></h3>
+    <body>
+    <table border="1px">
+        <tr>
+            <th>Name</th>
+            <th>Password</th>
+            <th>Delete</th>
+            <th>Update</th>
+        </tr>
+    </table>
+
+    </body>
+</div>
+</html>
