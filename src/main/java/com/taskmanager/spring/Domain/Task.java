@@ -15,6 +15,7 @@ public class Task
     private Long userid;
     @NotEmpty
     private String title;
+    @Lob
     @NotEmpty
     private String body;
     @NotEmpty

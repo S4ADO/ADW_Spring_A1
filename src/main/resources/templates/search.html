@@ -6,7 +6,11 @@
 <div align="center">
     <a href = "#" th:href="@{/logout}">Logout</a>
     <a href = "#" th:href="@{/home}">Home</a>
-    <p th:text="${param.homemsg[0]}" th:unless="${param.homemsg == null}"></p><br/>
+    <form th:action = "@{/search}" method = "POST" th:object="${search}">
+        <input type = "text"  th:field="*{searchstring}"/>
+        <input type="image" height = "15" width = "15" src="https://www.alrightnow.com/wp-content/themes/alright/img/search-icon.png" alt="Submit Form" />
+    </form>
+    <p th:text="${param.searchmsg[0]}" th:unless="${param.searchmsg == null}"></p><br/>
 </div>
         <div align="center">
             <h3 th:text="'Welcome to Task Manager ' + ${session.username}"></h3>
@@ -33,7 +37,5 @@
                 </table>
             </body>
             <br/><br/><br/>
-            <a href="#" th:href="@{/addtask}">Add Task</a><br/><br/>
-            <a href="#" th:href="@{/search}">Search Task Bodies</a>
         </div>
 </html>

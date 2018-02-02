@@ -11,7 +11,7 @@
     <p th:text="${param.loginmsg[0]}" th:unless="${param.loginmsg == null}">loginerror</p>
     <h3>Login to Task Manager</h3>
     <form action="#" th:action="@{/login}" th:object="${user}" method="post">
-        <p>First Name: </p>
+        <p>Username: </p>
         <input type = "text" th:field="*{username}"/>
         <p>Password </p>
         <input type = "password" th:field="*{password}"/>

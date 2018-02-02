@@ -1,0 +1,3 @@
+2018-02-02 17:38:55 jdbc[12]: exception
+org.h2.jdbc.JdbcSQLException: Value too long for column "BODY VARCHAR(255) NOT NULL": "'body lol x2body lol x2body lol x2body lol x2body lol x2body lol x2body lol x2body lol x2body lol x2body lol x2body lol x2body l... (264)"; SQL statement:
+update task set body=?, completed=?, date_complete=?, date_created=?, title=?, userid=? where taskid=? [22001-196]

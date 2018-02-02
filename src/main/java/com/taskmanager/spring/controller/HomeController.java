@@ -1,5 +1,6 @@
 package com.taskmanager.spring.controller;
 
+import com.taskmanager.spring.Domain.SearchForm;
 import com.taskmanager.spring.Domain.Task;
 import com.taskmanager.spring.Domain.User;
 import com.taskmanager.spring.service.TaskService;
@@ -7,13 +8,11 @@ import com.taskmanager.spring.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-
 import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
 import java.util.List;
 
 @Controller
@@ -51,6 +50,33 @@ public class HomeController
             redirectAttributes.addAttribute("loginmsg", "You must be logged in to access that page");
             return "redirect:/login";
         }
+    }
+
+    @RequestMapping(value = "/search", method = RequestMethod.GET)
+    public String searchView(Model model, HttpSession session, RedirectAttributes redirectAttributes)
+    {
+        if(session.getAttribute("login") == null)
+        {
+            redirectAttributes.addAttribute("loginmsg", "You must be logged in to access that page");
+            return "redirect:/login";
+        }
+        SearchForm sf = new SearchForm();
+        model.addAttribute("search", sf);
+        return "search";
+    }
+
+    @RequestMapping(value = "/search", method = RequestMethod.POST)
+    public String search(Model model, HttpSession session, @Valid @ModelAttribute("search") SearchForm search, BindingResult bindingResult, RedirectAttributes redirectAttributes)
+    {
+        //Throw error form validation error
+        if(bindingResult.hasErrors())
+        {
+            redirectAttributes.addAttribute("searchmsg", "You must input a search string");
+            return "redirect:/search";
+        }
+        List<Task> searchTasks = taskService.findByBody(search.getSearchstring(), (Long)session.getAttribute("userid"));
+        model.addAttribute("tasks", searchTasks);
+        return "search";
     }
 
     //List of users to keep track of

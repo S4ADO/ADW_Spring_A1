@@ -1,6 +1,7 @@
 package com.taskmanager.spring.controller;
 
 import com.taskmanager.spring.Domain.LoginForm;
+import com.taskmanager.spring.Domain.SearchForm;
 import com.taskmanager.spring.Domain.User;
 import com.taskmanager.spring.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +20,7 @@ public class UserController
     @Autowired
     UserService userService;
 
-    @RequestMapping(value = "/login", method = RequestMethod.GET) // Would output to /user/register
+    @RequestMapping(value = "/login", method = RequestMethod.GET)
     public String loginView(Model model)
     {
         LoginForm user = new LoginForm();
@@ -28,7 +29,8 @@ public class UserController
         return "login";
     }
 
-    @RequestMapping(value = "/login", method = RequestMethod.POST) // Would output to /user/register
+    //
+    @RequestMapping(value = "/login", method = RequestMethod.POST)
     public String login(Model model, @Valid @ModelAttribute("user") LoginForm user, BindingResult bindingResult, HttpSession session)
     {
         if(bindingResult.hasErrors())
@@ -50,6 +52,9 @@ public class UserController
         session.setAttribute("login", true);
         session.setAttribute("userid", retrievedUser.getId());
         session.setAttribute("username", retrievedUser.getUsername());
+
+        SearchForm search = new SearchForm();
+        model.addAttribute("search", search);
         return "redirect:/home";
     }
 
@@ -74,7 +79,7 @@ public class UserController
     }
 
     @RequestMapping(value = "/register", method = RequestMethod.POST) // Would output to /user/register
-    public String register(Model model, @Valid @ModelAttribute("user") User user, BindingResult bindingResult)
+    public String register(Model model, @Valid @ModelAttribute("user") User user, BindingResult bindingResult, RedirectAttributes redirectAttributes)
     {
         //Throw error form validation error
         if(bindingResult.hasErrors())
@@ -87,7 +92,8 @@ public class UserController
         User saved = userService.save(user, true);
         if (saved != null)
         {
-            return "redirect:/";
+            redirectAttributes.addAttribute("loginmsg", "You have registered successfully");
+            return "redirect:/login";
         }
         else
         {

@@ -19,6 +19,12 @@ public class TaskService
     {
        return taskRep.save(t);
     }
+    public List<Task> findByBody(String searchstring, Long userid)
+    {
+        //Search LIKE %%
+        searchstring = "%" + searchstring + "%";
+        return taskRep.searchBodies(searchstring, userid);
+    }
 
     public List<Task> getAllTasksByUser(Long id)
     {
@@ -28,6 +34,11 @@ public class TaskService
     public Task getTask(Long taskid, Long userid)
     {
        return taskRep.findByTaskidAndUserid(taskid, userid);
+    }
+
+    public void deleteTask(Long taskid)
+    {
+        taskRep.delete(taskid);
     }
 
     public List<Task> getAll()

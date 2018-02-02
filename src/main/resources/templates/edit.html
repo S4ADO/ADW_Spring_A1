@@ -13,16 +13,16 @@
 <div align="center">
     <h3 th:text="'Welcome to Task Manager ' + ${session.username}"></h3>
     <body>
-    <form action="#" th:action="@{/edit}" th:object="${task}" method="post">
+    <form action="#" th:action="@{/edit}" th:object="${task}" method="post" id = "edittask">
         <input type = "hidden" th:field="*{taskid}"/>
         <p>Title:</p>
         <input type = "text" th:field="*{title}" th:value="${task.getTitle()}"/>
         <p>Body</p>
-        <input type = "text" th:field="*{body}" th:value="${task.getBody()}"/>
+        <textarea rows="4" cols="50" th:field="*{body}" th:value="${task.getBody()}" form="edittask"></textarea>
         <p>Complete Date</p>
         <input type = "text" th:field="*{dateComplete}" th:value="${task.dateComplete}"/>
         <p>Completed</p>
-        <input type = "text" th:field="*{completed}" th:value="${task.completed}"/>
+        <input type = "number" min = "0" max = "1" th:field="*{completed}" th:value="${task.completed}"/>
         <br/><br/><br/>
         <input type = "submit" value = "Update"/>
     </form>

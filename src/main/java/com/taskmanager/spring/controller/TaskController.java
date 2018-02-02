@@ -27,8 +27,13 @@ public class TaskController
     TaskService taskService;
 
     @RequestMapping(value = "/addtask", method = RequestMethod.GET) // Would output to /user/register
-    public String addTaskView(Model model)
+    public String addTaskView(Model model, HttpSession session, RedirectAttributes redirectAttributes)
     {
+        if(session.getAttribute("login") == null)
+        {
+            redirectAttributes.addAttribute("loginmsg", "You must be logged in to access that page");
+            return "redirect:/login";
+        }
         TaskForm taskForm = new TaskForm();
         model.addAttribute("task", taskForm);
         return "addtask";
@@ -103,5 +108,19 @@ public class TaskController
             redirectAttributes.addAttribute("homemsg", "That task does not belong to you or does not exist");
             return "redirect:/home";
         }
+    }
+
+    @RequestMapping(value = "/delete/{task}", method = RequestMethod.GET)
+    public String delete(Model model, @PathVariable Task task, HttpSession session, RedirectAttributes redirectAttributes)
+    {
+        Task find = taskService.getTask(task.getTaskid(), (Long)session.getAttribute("userid"));
+        if(find == null)
+        {
+            redirectAttributes.addAttribute("homemsg", "That task does not belong to you or does not exist");
+            return "redirect:/home";
+        }
+        taskService.deleteTask(find.getTaskid());
+        redirectAttributes.addAttribute("homemsg", "Task deleted");
+        return "redirect:/home";
     }
 }
