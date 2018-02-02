@@ -2,21 +2,23 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <div align="center">
     <head>
-        <title>User registration</title>
+        <title>Login to Task Manager</title>
     </head>
     <body>
     <div th:if="${message != null}">
         <span th:text="${message}"/>
     </div>
-    <h3>User registration</h3>
-    <form action="#" th:action="@{/register}" th:object="${user}" method="post">
+    <h3>Login to Task Manager</h3>
+    <form action="#" th:action="@{/login}" th:object="${user}" method="post">
         <p>First Name: </p>
         <input type = "text" th:field="*{username}"/>
         <p>Password </p>
         <input type = "password" th:field="*{password}"/>
         <br/><br/><br/>
-        <input type = "submit" value = "Register"/>
+        <input type = "submit" value = "Login"/>
     </form>
     </body>
+    <br/><br/><br/>
+    <a href="#" th:href="@{/register}">Register</a>
 </div>
 </html>
