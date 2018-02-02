@@ -25,6 +25,11 @@ public class TaskService
         return taskRep.findAllByUserid(id);
     }
 
+    public Task getTask(Long taskid, Long userid)
+    {
+       return taskRep.findByTaskidAndUserid(taskid, userid);
+    }
+
     public List<Task> getAll()
     {
         return taskRep.findAll();

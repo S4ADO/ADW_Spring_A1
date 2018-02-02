@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Edit Task</title>
+</head>
+<body>
+<div align="center">
+    <a href = "#" th:href="@{/logout}">Logout</a>
+    <a href = "#" th:href="@{/home}">Home</a>
+    <h3>Edit Task</h3>
+    <p th:text="${param.editmsg[0]}" th:unless="${param.editmsg == null}"></p>
+</div>
+<div align="center">
+    <h3 th:text="'Welcome to Task Manager ' + ${session.username}"></h3>
+    <body>
+    <form action="#" th:action="@{/edit}" th:object="${task}" method="post">
+        <input type = "hidden" th:field="*{taskid}"/>
+        <p>Title:</p>
+        <input type = "text" th:field="*{title}" th:value="${task.getTitle()}"/>
+        <p>Body</p>
+        <input type = "text" th:field="*{body}" th:value="${task.getBody()}"/>
+        <p>Complete Date</p>
+        <input type = "text" th:field="*{dateComplete}" th:value="${task.dateComplete}"/>
+        <p>Completed</p>
+        <input type = "text" th:field="*{completed}" th:value="${task.completed}"/>
+        <br/><br/><br/>
+        <input type = "submit" value = "Update"/>
+    </form>
+    <a href="#" th:href="@{/addtask}">Add Task</a>
+    </body>
+</div>
+</body>
+</html>

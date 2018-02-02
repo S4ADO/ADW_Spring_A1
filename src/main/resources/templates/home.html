@@ -8,26 +8,31 @@
     <a href = "#" th:href="@{/home}">Home</a>
 </div>
 <p th:text="${param.homemsg[0]}" th:unless="${param.homemsg == null}">loginerror</p>
-<div align="center">
-    <h3 th:text="'Welcome to Task Manager ' + ${session.username}"></h3>
-    <body>
-        <table border="1px">
-            <tr>
-                <th>Created</th>
-                <th>Title</th>
-                <th>Body</th>
-                <th>Completed</th>
-                <th>ToComplete</th>
-            </tr>
-            <tr th:each="task : ${tasks}">
-                <td th:text="${task.dateCreated}"></td>
-                <td th:text="${task.getTitle()}"></td>
-                <td th:text="${task.getBody()}"></td>
-                <td th:text="${task.completed}"></td>
-                <td th:text="${task.dateComplete}"></td>
-            </tr>
-        </table>
-    <a href="#" th:href="@{/addtask}">Add Task</a>
-    </body>
-</div>
+        <div align="center">
+            <h3 th:text="'Welcome to Task Manager ' + ${session.username}"></h3>
+            <body>
+                <table border="1px">
+                    <tr>
+                        <th>Created</th>
+                        <th>Title</th>
+                        <th>Body</th>
+                        <th>Complete Date</th>
+                        <th>Completed</th>
+                        <th>Edit</th>
+                        <th>Delete</th>
+                    </tr>
+                    <tr th:each="task : ${tasks}">
+                        <td th:text="${task.dateCreated}"></td>
+                        <td th:text="${task.getTitle()}"></td>
+                        <td th:text="${task.getBody()}"></td>
+                        <td th:text="${task.dateComplete}"></td>
+                        <td th:text="${task.completed}"></td>
+                        <td><a href="#" th:href="@{/edit/}+${task.getTaskid()}">Edit</a> </td>
+                        <td><a href="#" th:href="@{/delete/}+${task.getTaskid()}">Delete</a> </td>
+                    </tr>
+                </table>
+            </body>
+            <br/><br/><br/>
+            <a href="#" th:href="@{/addtask}">Add Task</a>
+        </div>
 </html>

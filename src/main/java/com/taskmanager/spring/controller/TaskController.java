@@ -1,9 +1,6 @@
 package com.taskmanager.spring.controller;
 
-import com.taskmanager.spring.Domain.LoginForm;
-import com.taskmanager.spring.Domain.Task;
-import com.taskmanager.spring.Domain.TaskForm;
-import com.taskmanager.spring.Domain.User;
+import com.taskmanager.spring.Domain.*;
 import com.taskmanager.spring.service.TaskService;
 import com.taskmanager.spring.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -65,5 +62,46 @@ public class TaskController
         taskService.save(task);
         redirectAttributes.addAttribute("homemsg", "Task added");
         return "redirect:/home";
+    }
+
+    @RequestMapping(value = "/edit/{task}", method = RequestMethod.GET)
+    public String updateView(Model model, @PathVariable Task task, HttpSession session, RedirectAttributes redirectAttributes)
+    {
+        Task find = taskService.getTask(task.getTaskid(), (Long)session.getAttribute("userid"));
+        if(find == null)
+        {
+            redirectAttributes.addAttribute("homemsg", "That task does not belong to you or does not exist");
+            return "redirect:/home";
+        }
+        model.addAttribute("task", task);
+        return "edit";
+    }
+
+    @RequestMapping(value = "/edit", method = RequestMethod.POST)
+    public String update(Model model, @ModelAttribute("task") Task task, HttpSession session, RedirectAttributes redirectAttributes)
+    {
+        //Check if task exists and belongs to user
+        Task find = taskService.getTask(task.getTaskid(), (Long)session.getAttribute("userid"));
+        if(find != null)
+        {
+            //check for valid input
+            if(task.getCompleted() < 0 || task.getCompleted() > 1 || !task.getDateComplete().matches("\\d{4}-\\d{2}-\\d{2}") )
+            {
+                redirectAttributes.addAttribute("homemsg", "Task date must be in the correct format and complete status should be either 0 or 1");
+                return "redirect:/home";
+            }
+            find.setBody(task.getBody());
+            find.setTitle(task.getTitle());
+            find.setDateComplete(task.getDateComplete());
+            find.setCompleted(task.getCompleted());
+            taskService.save(find);
+            redirectAttributes.addAttribute("homemsg", "Task updated");
+            return "redirect:/home";
+        }
+        else
+        {
+            redirectAttributes.addAttribute("homemsg", "That task does not belong to you or does not exist");
+            return "redirect:/home";
+        }
     }
 }
