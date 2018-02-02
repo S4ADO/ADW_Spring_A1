@@ -3,6 +3,9 @@
 <head>
     <title th:text="'Welcome to Task Manager ' + ${session.username}">Welcome to Task Manager</title>
 </head>
+<div align="right">
+    <a href = "#" th:href="@{/logout}">Logout</a>
+</div>
 <div align="center">
     <h3 th:text="'Welcome to Task Manager ' + ${session.username}"></h3>
     <body>

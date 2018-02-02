@@ -8,7 +8,7 @@
     <div th:if="${message != null}">
         <span th:text="${message}"/>
     </div>
-    <p th:text="${param.loginerror[0]}" th:unless="${param.loginerror == null}">loginerror</p>
+    <p th:text="${param.loginmsg[0]}" th:unless="${param.loginmsg == null}">loginerror</p>
     <h3>Login to Task Manager</h3>
     <form action="#" th:action="@{/login}" th:object="${user}" method="post">
         <p>First Name: </p>

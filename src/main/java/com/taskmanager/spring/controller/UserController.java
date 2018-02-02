@@ -8,6 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
@@ -52,7 +53,19 @@ public class UserController
         return "redirect:/home";
     }
 
-    @RequestMapping(value = "/register", method = RequestMethod.GET) // Would output to /user/register
+    //Deletes session variables and sends user to login page
+    @RequestMapping(value = "/logout", method = RequestMethod.GET) // Would output to /user/register
+    public String logout(Model model, HttpSession session, RedirectAttributes redirectAttributes)
+    {
+        session.removeAttribute("login");
+        session.removeAttribute("userid");
+        session.removeAttribute("username");
+
+        redirectAttributes.addAttribute("loginmsg", "You have been logged out");
+        return "redirect:/login";
+    }
+
+        @RequestMapping(value = "/register", method = RequestMethod.GET) // Would output to /user/register
     public String registerView(Model model)
     {
         User user = new User();

@@ -41,7 +41,7 @@ public class HomeController
         }
         else
         {
-            redirectAttributes.addAttribute("loginerror", "You must be logged in to access that page");
+            redirectAttributes.addAttribute("loginmsg", "You must be logged in to access that page");
             return "redirect:/login";
         }
     }
